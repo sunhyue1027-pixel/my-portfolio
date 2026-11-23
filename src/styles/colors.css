@@ -1,0 +1,101 @@
+/* ============================================================
+   컬러 팔레트 디자인 시스템
+   출처: my-ai-web/컬러 팔레트 디자인 시스템.md (마켓컬리 실측 팔레트)
+
+   ⚠️ 색을 바꿀 때는 src/theme/theme.js 의 palette 값도 같이 바꿔 주세요.
+      (MUI는 색을 계산해야 해서 var() 대신 실제 hex 값이 필요합니다)
+   ============================================================ */
+
+:root {
+  /* Primary Colors */
+  --color-primary: #5F0080;        /* 로고, 주요 버튼, 활성 메뉴 */
+  --color-primary-light: #F4EDF7;  /* 연한 보라 배경 (선택 상태, 태그 배경) */
+  --color-primary-dark: #4A0064;   /* 눌림/hover 상태 */
+
+  /* Secondary Colors */
+  --color-secondary: #BD76FF;      /* 뱃지, 태그 */
+  --color-accent: #6F1888;         /* 링크, 강조 텍스트 */
+
+  /* Background Colors */
+  --color-bg-primary: #FFFFFF;     /* 기본 페이지 배경 */
+  --color-bg-secondary: #F8EDDA;   /* 크림 톤 카드/섹션 배경 */
+
+  /* Text Colors */
+  --color-text-primary: #333333;   /* 제목, 본문 */
+  --color-text-secondary: #6D6D6D; /* 보조 설명 */
+  --color-text-muted: #999999;     /* 장식용 텍스트만 (대비 낮음) */
+
+  /* Interactive Colors */
+  --color-button-primary: #5F0080;
+  --color-button-hover: #4A0064;
+  --color-link: #6F1888;
+  --color-link-hover: #5F0080;
+
+  /* 확장 변수 */
+  --color-bg-warm: #DFD9CB;
+  --color-bg-gray: #F7F7F7;
+  --color-text-nav: #464C52;
+  --color-text-disabled: #B5B5B5;
+  --color-border-light: #EEEEEE;
+  --color-border: #E2E2E2;
+  --color-border-strong: #D9D9D9;
+  --color-overlay: rgba(0, 0, 0, 0.4);
+}
+
+/* 다크모드: 보라가 어두운 배경에 묻히지 않도록 밝기를 올린 값 사용 */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-primary: #B27CD0;
+    --color-primary-light: #2A1A33;
+    --color-primary-dark: #C99BE0;
+
+    --color-secondary: #CB94FF;
+    --color-accent: #C99BE0;
+
+    --color-bg-primary: #121212;
+    --color-bg-secondary: #1E1B22;
+
+    --color-text-primary: #EDEDED;
+    --color-text-secondary: #B0B0B0;
+    --color-text-muted: #7A7A7A;
+
+    --color-button-primary: #8A3FB0;
+    --color-button-hover: #9D55C2;
+    --color-link: #C99BE0;
+    --color-link-hover: #DDBDEE;
+
+    --color-bg-gray: #1A1A1A;
+    --color-text-nav: #CFCFCF;
+    --color-border-light: #2A2A2A;
+    --color-border: #333333;
+    --color-border-strong: #444444;
+  }
+}
+
+/* 사용자가 직접 다크모드를 선택한 경우 (data-theme="dark") */
+:root[data-theme="dark"] {
+  --color-primary: #B27CD0;
+  --color-primary-light: #2A1A33;
+  --color-primary-dark: #C99BE0;
+
+  --color-secondary: #CB94FF;
+  --color-accent: #C99BE0;
+
+  --color-bg-primary: #121212;
+  --color-bg-secondary: #1E1B22;
+
+  --color-text-primary: #EDEDED;
+  --color-text-secondary: #B0B0B0;
+  --color-text-muted: #7A7A7A;
+
+  --color-button-primary: #8A3FB0;
+  --color-button-hover: #9D55C2;
+  --color-link: #C99BE0;
+  --color-link-hover: #DDBDEE;
+
+  --color-bg-gray: #1A1A1A;
+  --color-text-nav: #CFCFCF;
+  --color-border-light: #2A2A2A;
+  --color-border: #333333;
+  --color-border-strong: #444444;
+}
