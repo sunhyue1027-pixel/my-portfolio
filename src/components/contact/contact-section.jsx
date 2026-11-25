@@ -1,13 +1,11 @@
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
 
 import useGuestbook from '../../hooks/use-guestbook';
-import { CONTACT_ITEMS, SNS_LINKS } from './contact-data';
+import { CONTACT_ITEMS } from './contact-data';
 import ContactInfoList from './contact-info-list';
 import GuestbookForm from './guestbook-form';
 import GuestbookList from './guestbook-list';
-import SnsLinks from './sns-links';
 
 /** 흰 카드 공통 스타일 */
 const panelSx = {
@@ -29,7 +27,7 @@ const subTitleSx = {
 
 /**
  * Home 탭의 Contact 섹션
- * - 위: 연락처(아이콘 + 텍스트) + SNS 동그란 버튼
+ * - 위: 연락처(아이콘 + 텍스트)
  * - 아래: 방명록 작성 폼 + 방명록 목록 (Supabase)
  *
  * Props:
@@ -96,26 +94,7 @@ function ContactSection({ index }) {
 
           {/* 연락처 */}
           <Box sx={panelSx}>
-            <Grid container spacing={{ xs: 4, md: 5 }} sx={{ alignItems: 'center' }}>
-              <Grid size={{ xs: 12, md: 7 }}>
-                <ContactInfoList items={CONTACT_ITEMS} />
-              </Grid>
-              <Grid
-                size={{ xs: 12, md: 5 }}
-                sx={{
-                  borderTop: { xs: '1px solid var(--contact-border)', md: 'none' },
-                  borderLeft: { md: '1px solid var(--contact-border)' },
-                  pt: { xs: 4, md: 0 },
-                  pl: { md: 5 },
-                }}
-              >
-                <Box component="h3" sx={{ ...subTitleSx, fontSize: 15 }}>SNS</Box>
-                <Box component="p" sx={{ m: 0, mb: 2, fontSize: 14, color: 'var(--contact-text-sub)' }}>
-                  작업 기록과 일상을 나누고 있어요.
-                </Box>
-                <SnsLinks links={SNS_LINKS} />
-              </Grid>
-            </Grid>
+            <ContactInfoList items={CONTACT_ITEMS} />
           </Box>
 
           {/* 방명록 */}

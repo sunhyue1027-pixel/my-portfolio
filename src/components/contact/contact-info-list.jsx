@@ -11,7 +11,7 @@ import Box from '@mui/material/Box';
  */
 function ContactInfoList({ items }) {
   return (
-    <Box component="ul" sx={{ m: 0, p: 0, listStyle: 'none', display: 'grid', gap: 2 }}>
+    <Box component="ul" sx={{ m: 0, p: 0, listStyle: 'none', display: 'grid', gap: 3, gridTemplateColumns: { xs: '1fr', sm: 'repeat(auto-fit, minmax(220px, 1fr))' } }}>
       {items.map(({ label, value, href, Icon }) => (
         <Box component="li" key={label} sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
           <Box
