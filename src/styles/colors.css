@@ -40,6 +40,20 @@
   --color-border: #E2E2E2;
   --color-border-strong: #D9D9D9;
   --color-overlay: rgba(0, 0, 0, 0.4);
+
+  /* Contact 섹션 전용: 아주 연한 네이비 + 베이비핑크 */
+  --contact-bg: #F3F6FB;
+  --contact-surface: #FFFFFF;
+  --contact-border: #DFE5F0;
+  --contact-navy: #34456B;
+  --contact-navy-hover: #26345A;
+  --contact-navy-soft: #E7ECF5;
+  --contact-on-navy: #FFFFFF;
+  --contact-pink: #FBE4EA;
+  --contact-pink-strong: #F2B8C6;
+  --contact-pink-ink: #A2445E;
+  --contact-text: #2B3242;
+  --contact-text-sub: #5E6678;
 }
 
 /* 다크모드: 보라가 어두운 배경에 묻히지 않도록 밝기를 올린 값 사용 */
@@ -69,6 +83,20 @@
     --color-border-light: #2A2A2A;
     --color-border: #333333;
     --color-border-strong: #444444;
+
+    /* Contact 섹션 (다크) */
+    --contact-bg: #151925;
+    --contact-surface: #1D2230;
+    --contact-border: #2C3447;
+    --contact-navy: #AFC0E6;
+    --contact-navy-hover: #C7D4F0;
+    --contact-navy-soft: #263049;
+    --contact-on-navy: #151925;
+    --contact-pink: #3A2730;
+    --contact-pink-strong: #8C4C5E;
+    --contact-pink-ink: #F2B8C6;
+    --contact-text: #E8EBF2;
+    --contact-text-sub: #A5ADBE;
   }
 }
 
@@ -98,4 +126,18 @@
   --color-border-light: #2A2A2A;
   --color-border: #333333;
   --color-border-strong: #444444;
+
+  /* Contact 섹션 (다크) */
+  --contact-bg: #151925;
+  --contact-surface: #1D2230;
+  --contact-border: #2C3447;
+  --contact-navy: #AFC0E6;
+  --contact-navy-hover: #C7D4F0;
+  --contact-navy-soft: #263049;
+  --contact-on-navy: #151925;
+  --contact-pink: #3A2730;
+  --contact-pink-strong: #8C4C5E;
+  --contact-pink-ink: #F2B8C6;
+  --contact-text: #E8EBF2;
+  --contact-text-sub: #A5ADBE;
 }

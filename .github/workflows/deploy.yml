@@ -32,6 +32,10 @@ jobs:
 
       - name: Build
         run: npm run build
+        # Supabase 공개 키는 저장소 Secrets 에서 주입합니다 (코드에 직접 쓰지 않음)
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
 
       # SPA 새로고침 대응: /about 같은 주소로 바로 들어와도 앱이 뜨도록 404.html = index.html
       - name: Add SPA fallback

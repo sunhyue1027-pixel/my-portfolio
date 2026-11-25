@@ -1,6 +1,7 @@
 import SectionBlock from '../components/SectionBlock'
+import ContactSection from '../components/contact/contact-section'
 
-// 홈 화면 5개 섹션. 순서를 바꾸거나 추가하려면 이 배열만 수정하면 됩니다.
+// 홈 화면 섹션 1~4. 순서를 바꾸거나 추가하려면 이 배열만 수정하면 됩니다. (5번 Contact 는 별도 컴포넌트)
 const SECTIONS = [
   {
     id: 'hero',
@@ -33,17 +34,16 @@ const SECTIONS = [
     tone: 'white',
     action: { label: '더 보기', to: '/projects' },
   },
-  {
-    id: 'contact',
-    label: 'CONTACT',
-    title: 'Contact 섹션',
-    description: '여기는 Contact 섹션입니다. 연락처, SNS, 간단한 메시지 폼이 들어갈 예정입니다.',
-    tone: 'cream',
-  },
 ]
 
 function HomePage() {
-  return SECTIONS.map((section, i) => <SectionBlock key={section.id} index={i + 1} {...section} />)
+  return (
+    <>
+      {SECTIONS.map((section, i) => <SectionBlock key={section.id} index={i + 1} {...section} />)}
+      {/* Contact 섹션: 연락처 + SNS + 방명록 (src/components/contact) */}
+      <ContactSection index={SECTIONS.length + 1} />
+    </>
+  )
 }
 
 export default HomePage
