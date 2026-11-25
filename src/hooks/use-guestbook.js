@@ -5,7 +5,7 @@ import { isSupabaseConfigured, supabase } from '../lib/supabase';
 const TABLE = 'guestbook';
 const BUCKET = 'guestbook-photos';
 
-/** 공개 컬럼만 조회합니다. (실명·이메일은 DB 권한상 조회 불가) */
+/** 공개 컬럼만 조회합니다. (이메일은 DB 권한상 조회 불가) */
 const PUBLIC_COLUMNS = 'id, nickname, affiliation, message, photo_url, created_at';
 
 /**
@@ -72,7 +72,7 @@ function useGuestbook() {
 
   /**
    * 방명록 글을 저장합니다. 사진이 있으면 먼저 업로드합니다.
-   * @param {{ nickname: string, realName: string, email: string, affiliation: string, message: string }} values
+   * @param {{ nickname: string, email: string, affiliation: string, message: string }} values
    * @param {File | null} photo
    */
   const addEntry = useCallback(async (values, photo) => {
@@ -80,7 +80,6 @@ function useGuestbook() {
 
     const { error } = await supabase.from(TABLE).insert({
       nickname: values.nickname.trim(),
-      real_name: values.realName.trim(),
       email: values.email.trim() || null,
       affiliation: values.affiliation.trim() || null,
       message: values.message.trim(),

@@ -1,7 +1,6 @@
 /** 방명록 입력 제한 (DB 제약조건과 같은 값) */
 export const GUESTBOOK_LIMITS = {
   nickname: 20,
-  realName: 30,
   affiliation: 40,
   message: 500,
 };
@@ -20,15 +19,11 @@ const EMAIL_PATTERN = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 export function validateGuestbook(values) {
   const errors = {};
   const nickname = values.nickname.trim();
-  const realName = values.realName.trim();
   const email = values.email.trim();
   const message = values.message.trim();
 
-  if (!nickname) errors.nickname = '닉네임을 입력해 주세요.';
+  if (!nickname) errors.nickname = '아이디 또는 닉네임을 입력해 주세요.';
   else if (nickname.length > GUESTBOOK_LIMITS.nickname) errors.nickname = `${GUESTBOOK_LIMITS.nickname}자 이내로 입력해 주세요.`;
-
-  if (!realName) errors.realName = '이름을 입력해 주세요.';
-  else if (realName.length > GUESTBOOK_LIMITS.realName) errors.realName = `${GUESTBOOK_LIMITS.realName}자 이내로 입력해 주세요.`;
 
   if (email && !EMAIL_PATTERN.test(email)) errors.email = '이메일 형식을 확인해 주세요.';
 

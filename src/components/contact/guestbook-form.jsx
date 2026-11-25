@@ -12,7 +12,7 @@ import { GUESTBOOK_LIMITS, validateGuestbook, validatePhoto } from '../../utils/
 import { outlinedCardSx } from './contact-styles';
 import PhotoUploadField from './photo-upload-field';
 
-const INITIAL_VALUES = { nickname: '', realName: '', email: '', affiliation: '', message: '' };
+const INITIAL_VALUES = { nickname: '', email: '', affiliation: '', message: '' };
 
 /** 밑줄형 입력창 (참고 이미지 "Enter your name" 스타일) */
 const underlineFieldSx = {
@@ -43,7 +43,7 @@ const noteFieldSx = {
 
 /**
  * 방명록 작성 폼
- * - 화면에는 닉네임만 공개되고, 실명·이메일은 DB에만 저장됩니다.
+ * - 아이디/닉네임은 공개되고, 이메일은 DB에만 저장됩니다(비공개).
  *
  * Props:
  * @param {function} onSubmit - (values, photo) => Promise, 저장 실패 시 throw [Required]
@@ -112,29 +112,11 @@ function GuestbookForm({ onSubmit }) {
       <Grid container columnSpacing={4} rowSpacing={2.5}>
         <Grid size={{ xs: 12, sm: 6 }}>
           <TextField
-            {...fieldProps('nickname', '닉네임', GUESTBOOK_LIMITS.nickname)}
+            {...fieldProps('nickname', '아이디 / 닉네임', GUESTBOOK_LIMITS.nickname)}
             variant="standard"
             required
             sx={underlineFieldSx}
-            helperText={errors.nickname || '방명록에 표시되는 이름이에요.'}
-          />
-        </Grid>
-        <Grid size={{ xs: 12, sm: 6 }}>
-          <TextField
-            {...fieldProps('realName', '실명', GUESTBOOK_LIMITS.realName)}
-            variant="standard"
-            required
-            sx={underlineFieldSx}
-            helperText={errors.realName || '공개되지 않아요.'}
-          />
-        </Grid>
-        <Grid size={{ xs: 12, sm: 6 }}>
-          <TextField
-            {...fieldProps('email', '이메일 (선택)', 254)}
-            variant="standard"
-            type="email"
-            sx={underlineFieldSx}
-            helperText={errors.email || '공개되지 않아요.'}
+            helperText={errors.nickname || '방명록에 표시돼요. 아이디나 닉네임 중 편한 걸로 적어 주세요.'}
           />
         </Grid>
         <Grid size={{ xs: 12, sm: 6 }}>
@@ -143,6 +125,15 @@ function GuestbookForm({ onSubmit }) {
             variant="standard"
             sx={underlineFieldSx}
             helperText={errors.affiliation || '예: OO대학교, 프론트엔드 개발자'}
+          />
+        </Grid>
+        <Grid size={12}>
+          <TextField
+            {...fieldProps('email', '이메일 (선택)', 254)}
+            variant="standard"
+            type="email"
+            sx={underlineFieldSx}
+            helperText={errors.email || '공개되지 않아요. 답장이 필요할 때만 사용해요.'}
           />
         </Grid>
         <Grid size={12} sx={{ mt: 1 }}>
@@ -180,7 +171,7 @@ function GuestbookForm({ onSubmit }) {
       >
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75, fontSize: 13, color: 'var(--contact-text-on-sky)' }}>
           <LockOutlinedIcon sx={{ fontSize: 16 }} aria-hidden="true" />
-          실명과 이메일은 비공개로 저장돼요.
+          이메일은 비공개로 저장돼요.
         </Box>
         <Button
           type="submit"
