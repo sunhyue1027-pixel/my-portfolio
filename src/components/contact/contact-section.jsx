@@ -63,7 +63,7 @@ function ContactSection({ index }) {
               <WavyLine />
             </Box>
             <Box component="p" sx={{ m: 0, fontSize: { xs: 15, md: 17 }, lineHeight: 1.6, color: 'var(--contact-text-sub)', wordBreak: 'keep-all' }}>
-              궁금한 점이나 함께하고 싶은 일이 있다면 편하게 연락 주세요.
+              포트폴리오를 봐 주셔서 감사합니다. 채용·협업 제안부터 피드백, 가벼운 인사까지 아래 방명록에 편하게 남겨 주세요.
             </Box>
           </Box>
 
