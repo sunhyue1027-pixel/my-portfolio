@@ -23,8 +23,9 @@ function ContactInfoList({ items }) {
               borderRadius: '50%',
               display: 'grid',
               placeItems: 'center',
-              bgcolor: 'var(--contact-pink)',
-              color: 'var(--contact-pink-ink)',
+              bgcolor: 'var(--contact-sky)',
+              border: '1.5px solid var(--contact-border)',
+              color: 'var(--contact-navy)',
             }}
           >
             <Icon fontSize="small" />

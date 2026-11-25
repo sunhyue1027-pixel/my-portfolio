@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
@@ -8,20 +9,36 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 
 import { GUESTBOOK_LIMITS, validateGuestbook, validatePhoto } from '../../utils/validate-guestbook';
+import { outlinedCardSx } from './contact-styles';
 import PhotoUploadField from './photo-upload-field';
 
 const INITIAL_VALUES = { nickname: '', realName: '', email: '', affiliation: '', message: '' };
 
-/** Contact 색상에 맞춘 입력창 스타일 */
-const fieldSx = {
-  '& .MuiInputBase-root': { bgcolor: 'var(--contact-surface)', borderRadius: 3, color: 'var(--contact-text)' },
-  '& .MuiOutlinedInput-notchedOutline': { borderColor: 'var(--contact-border)' },
+/** 밑줄형 입력창 (참고 이미지 "Enter your name" 스타일) */
+const underlineFieldSx = {
+  '& .MuiInputBase-root': { color: 'var(--contact-text)', fontSize: 15 },
+  '& .MuiInput-underline::before': { borderBottom: '1.5px solid var(--contact-border)' },
+  '& .MuiInput-underline:hover:not(.Mui-disabled)::before': { borderBottom: '2px solid var(--contact-navy)' },
+  '& .MuiInput-underline::after': { borderBottomColor: 'var(--contact-navy)' },
+  '& .MuiInputLabel-root': { color: 'var(--contact-text-on-sky)', fontWeight: 600 },
+  '& .MuiInputLabel-root.Mui-focused': { color: 'var(--contact-navy)' },
+  '& .MuiFormHelperText-root': { color: 'var(--contact-text-on-sky)', mx: 0 },
+  '& .MuiFormHelperText-root.Mui-error, & .MuiInputLabel-root.Mui-error': { color: 'error.main' },
+};
+
+/** 메모장 박스형 입력창 (참고 이미지 "Keep your notes here" 스타일) */
+const noteFieldSx = {
+  '& .MuiInputBase-root': {
+    bgcolor: 'var(--contact-surface)',
+    color: 'var(--contact-text)',
+    borderRadius: 3,
+    alignItems: 'flex-start',
+  },
+  '& .MuiOutlinedInput-notchedOutline': { borderColor: 'var(--contact-border)', borderWidth: 1.5 },
   '& .MuiInputBase-root:hover .MuiOutlinedInput-notchedOutline': { borderColor: 'var(--contact-navy)' },
   '& .MuiInputBase-root.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: 'var(--contact-navy)' },
-  '& .MuiInputLabel-root': { color: 'var(--contact-text-sub)' },
-  '& .MuiInputLabel-root.Mui-focused': { color: 'var(--contact-navy)' },
-  '& .MuiFormHelperText-root': { color: 'var(--contact-text-sub)' },
-  '& .MuiFormHelperText-root.Mui-error, & .MuiInputLabel-root.Mui-error': { color: 'error.main' },
+  '& .MuiFormHelperText-root': { color: 'var(--contact-text-on-sky)', mx: 0, textAlign: 'right' },
+  '& .MuiFormHelperText-root.Mui-error': { color: 'error.main', textAlign: 'left' },
 };
 
 /**
@@ -82,46 +99,61 @@ function GuestbookForm({ onSubmit }) {
     error: Boolean(errors[name]),
     disabled: isSubmitting,
     fullWidth: true,
-    sx: fieldSx,
     slotProps: { htmlInput: { maxLength } },
   });
 
   return (
-    <Box component="form" noValidate onSubmit={handleSubmit}>
-      <Grid container spacing={2}>
+    <Box
+      component="form"
+      noValidate
+      onSubmit={handleSubmit}
+      sx={{ ...outlinedCardSx, bgcolor: 'var(--contact-sky)', p: { xs: 3, md: 4 } }}
+    >
+      <Grid container columnSpacing={4} rowSpacing={2.5}>
         <Grid size={{ xs: 12, sm: 6 }}>
           <TextField
             {...fieldProps('nickname', '닉네임', GUESTBOOK_LIMITS.nickname)}
+            variant="standard"
             required
+            sx={underlineFieldSx}
             helperText={errors.nickname || '방명록에 표시되는 이름이에요.'}
           />
         </Grid>
         <Grid size={{ xs: 12, sm: 6 }}>
           <TextField
             {...fieldProps('realName', '실명', GUESTBOOK_LIMITS.realName)}
+            variant="standard"
             required
+            sx={underlineFieldSx}
             helperText={errors.realName || '공개되지 않아요.'}
           />
         </Grid>
         <Grid size={{ xs: 12, sm: 6 }}>
           <TextField
             {...fieldProps('email', '이메일 (선택)', 254)}
+            variant="standard"
             type="email"
-            helperText={errors.email || '공개되지 않아요. 답장이 필요할 때만 사용해요.'}
+            sx={underlineFieldSx}
+            helperText={errors.email || '공개되지 않아요.'}
           />
         </Grid>
         <Grid size={{ xs: 12, sm: 6 }}>
           <TextField
             {...fieldProps('affiliation', '소속 / 직업 (선택)', GUESTBOOK_LIMITS.affiliation)}
+            variant="standard"
+            sx={underlineFieldSx}
             helperText={errors.affiliation || '예: OO대학교, 프론트엔드 개발자'}
           />
         </Grid>
-        <Grid size={12}>
+        <Grid size={12} sx={{ mt: 1 }}>
           <TextField
-            {...fieldProps('message', '남기실 말', GUESTBOOK_LIMITS.message)}
+            {...fieldProps('message', '', GUESTBOOK_LIMITS.message)}
+            placeholder="남기실 말을 적어 주세요..."
+            slotProps={{ htmlInput: { maxLength: GUESTBOOK_LIMITS.message, 'aria-label': '남기실 말' } }}
             required
             multiline
             minRows={4}
+            sx={noteFieldSx}
             helperText={errors.message || `${values.message.length} / ${GUESTBOOK_LIMITS.message}`}
           />
         </Grid>
@@ -146,22 +178,43 @@ function GuestbookForm({ onSubmit }) {
           gap: 2,
         }}
       >
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75, fontSize: 13, color: 'var(--contact-text-sub)' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75, fontSize: 13, color: 'var(--contact-text-on-sky)' }}>
           <LockOutlinedIcon sx={{ fontSize: 16 }} aria-hidden="true" />
-          실명과 이메일은 안전하게 비공개로 저장돼요.
+          실명과 이메일은 비공개로 저장돼요.
         </Box>
         <Button
           type="submit"
           disabled={isSubmitting}
+          endIcon={
+            isSubmitting ? (
+              <CircularProgress size={18} sx={{ color: 'inherit' }} />
+            ) : (
+              <Box
+                component="span"
+                sx={{
+                  width: 28,
+                  height: 28,
+                  borderRadius: '50%',
+                  display: 'grid',
+                  placeItems: 'center',
+                  bgcolor: 'var(--contact-on-navy)',
+                  color: 'var(--contact-navy)',
+                }}
+              >
+                <ArrowForwardIcon sx={{ fontSize: 18 }} />
+              </Box>
+            )
+          }
           sx={{
-            px: 4,
+            pl: 3,
+            pr: 1,
             bgcolor: 'var(--contact-navy)',
             color: 'var(--contact-on-navy)',
             '&:hover': { bgcolor: 'var(--contact-navy-hover)' },
             '&.Mui-disabled': { bgcolor: 'var(--contact-navy-soft)', color: 'var(--contact-text-sub)' },
           }}
         >
-          {isSubmitting ? <CircularProgress size={20} sx={{ color: 'inherit' }} /> : '방명록 남기기'}
+          방명록 남기기
         </Button>
       </Box>
     </Box>

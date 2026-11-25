@@ -4,26 +4,10 @@ import Container from '@mui/material/Container';
 import useGuestbook from '../../hooks/use-guestbook';
 import { CONTACT_ITEMS } from './contact-data';
 import ContactInfoList from './contact-info-list';
+import { circleBadgeSx, eyebrowSx, headingSx, outlinedCardSx, SCRIPT_FONT } from './contact-styles';
 import GuestbookForm from './guestbook-form';
 import GuestbookList from './guestbook-list';
-
-/** 흰 카드 공통 스타일 */
-const panelSx = {
-  bgcolor: 'var(--contact-surface)',
-  border: '1px solid var(--contact-border)',
-  borderRadius: 5,
-  p: { xs: 3, md: 5 },
-};
-
-/** 작은 소제목 스타일 */
-const subTitleSx = {
-  m: 0,
-  mb: 0.5,
-  fontSize: { xs: '1.25rem', md: '1.4rem' },
-  fontWeight: 700,
-  color: 'var(--contact-text)',
-  letterSpacing: '-0.01em',
-};
+import WavyLine from './wavy-line';
 
 /**
  * Home 탭의 Contact 섹션
@@ -38,6 +22,7 @@ const subTitleSx = {
  */
 function ContactSection({ index }) {
   const { entries, isLoading, loadError, isEnabled, addEntry } = useGuestbook();
+  const isCountVisible = isEnabled && !isLoading && !loadError;
 
   return (
     <Box component="section" id="contact" aria-labelledby="contact-title" sx={{ scrollMarginTop: 68 }}>
@@ -53,24 +38,11 @@ function ContactSection({ index }) {
         </Box>
       </Box>
 
-      <Box sx={{ bgcolor: 'var(--contact-bg)', pt: { xs: 4, md: 6 }, pb: { xs: 8, md: 12 } }}>
+      <Box sx={{ bgcolor: 'var(--contact-bg)', pt: { xs: 3, md: 5 }, pb: { xs: 8, md: 12 } }}>
         <Container maxWidth="md" sx={{ px: { xs: 2, md: 3 } }}>
           {/* 헤더 */}
           <Box sx={{ textAlign: 'center', mb: { xs: 4, md: 6 } }}>
-            <Box
-              sx={{
-                display: 'inline-block',
-                px: 1.5,
-                py: 0.5,
-                mb: 2,
-                borderRadius: 999,
-                bgcolor: 'var(--contact-navy-soft)',
-                color: 'var(--contact-navy)',
-                fontSize: 13,
-                fontWeight: 700,
-                letterSpacing: '0.08em',
-              }}
-            >
+            <Box sx={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.12em', color: 'var(--contact-text-sub)', mb: 1 }}>
               {String(index).padStart(2, '0')} · CONTACT
             </Box>
             <Box
@@ -78,14 +50,17 @@ function ContactSection({ index }) {
               id="contact-title"
               sx={{
                 m: 0,
-                mb: 1.5,
-                fontSize: { xs: '2rem', md: '2.5rem' },
-                fontWeight: 800,
-                letterSpacing: '-0.02em',
-                color: 'var(--contact-text)',
+                fontFamily: SCRIPT_FONT,
+                fontWeight: 400,
+                fontSize: { xs: '2.5rem', md: '3.25rem' },
+                lineHeight: 1.3,
+                color: 'var(--contact-navy)',
               }}
             >
               Contact
+            </Box>
+            <Box sx={{ maxWidth: 360, mx: 'auto', my: 1.5 }}>
+              <WavyLine />
             </Box>
             <Box component="p" sx={{ m: 0, fontSize: { xs: 15, md: 17 }, lineHeight: 1.6, color: 'var(--contact-text-sub)', wordBreak: 'keep-all' }}>
               궁금한 점이나 함께하고 싶은 일이 있다면 편하게 연락 주세요.
@@ -93,28 +68,36 @@ function ContactSection({ index }) {
           </Box>
 
           {/* 연락처 */}
-          <Box sx={panelSx}>
+          <Box sx={{ ...outlinedCardSx, p: { xs: 3, md: 4 } }}>
             <ContactInfoList items={CONTACT_ITEMS} />
           </Box>
 
           {/* 방명록 */}
-          <Box sx={{ mt: { xs: 6, md: 8 } }}>
-            <Box sx={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 2, mb: 2 }}>
-              <Box component="h3" sx={subTitleSx}>Guestbook</Box>
-              {isEnabled && !isLoading && !loadError && (
-                <Box sx={{ fontSize: 14, color: 'var(--contact-text-sub)' }}>{entries.length}개의 글</Box>
+          <Box sx={{ mt: { xs: 7, md: 9 } }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 2, mb: 1 }}>
+              <Box>
+                <Box component="p" sx={eyebrowSx}>다녀간 흔적을 남겨 주세요</Box>
+                <Box component="h3" sx={headingSx}>Guestbook</Box>
+              </Box>
+              {isCountVisible && (
+                <Box sx={circleBadgeSx} aria-label={`방명록 ${entries.length}개`}>
+                  {entries.length}
+                </Box>
               )}
+            </Box>
+            <Box sx={{ mb: 3 }}>
+              <WavyLine />
             </Box>
 
             {isEnabled ? (
               <>
-                <Box sx={{ ...panelSx, mb: 4 }}>
-                  <GuestbookForm onSubmit={addEntry} />
+                <GuestbookForm onSubmit={addEntry} />
+                <Box sx={{ mt: 5 }}>
+                  <GuestbookList entries={entries} isLoading={isLoading} errorText={loadError} />
                 </Box>
-                <GuestbookList entries={entries} isLoading={isLoading} errorText={loadError} />
               </>
             ) : (
-              <Box sx={{ ...panelSx, textAlign: 'center', color: 'var(--contact-text-sub)', fontSize: 15 }}>
+              <Box sx={{ ...outlinedCardSx, p: 4, textAlign: 'center', color: 'var(--contact-text-sub)', fontSize: 15 }}>
                 방명록을 준비하고 있어요.
               </Box>
             )}

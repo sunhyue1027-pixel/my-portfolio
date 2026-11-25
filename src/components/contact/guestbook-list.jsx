@@ -35,7 +35,7 @@ function GuestbookList({ entries, isLoading = false, errorText = '' }) {
   return (
     <Grid container spacing={2}>
       {entries.map((entry) => (
-        <Grid key={entry.id} size={{ xs: 12, sm: 6, md: 4 }}>
+        <Grid key={entry.id} size={{ xs: 12, sm: 6 }}>
           <GuestbookCard entry={entry} />
         </Grid>
       ))}
